@@ -788,6 +788,17 @@ py_binary(
 )
 
 py_binary(
+    name = "my_parser",
+    srcs = ["my_parser.py"],
+    deps = [
+        ":graph_builder",
+        ":sentence_py_pb2",
+        ":structured_graph_builder",
+        ":task_spec_py_pb2",
+    ],
+)
+
+py_binary(
     name = "conll2tree",
     srcs = ["conll2tree.py"],
     deps = [
@@ -869,3 +880,49 @@ sh_test(
     ],
     tags = ["slow"],
 )
+
+py_binary(
+    name = "tokenizer_server",
+    srcs = ["tokenizer_server.py"],
+    deps = [
+        ":graph_builder",
+        ":sentence_py_pb2",
+        ":structured_graph_builder",
+        ":task_spec_py_pb2",
+    ],
+)
+
+py_binary(
+    name = "morpher_server",
+    srcs = ["morpher_server.py"],
+    deps = [
+        ":graph_builder",
+        ":sentence_py_pb2",
+        ":structured_graph_builder",
+        ":task_spec_py_pb2",
+    ],
+)
+
+py_binary(
+    name = "tagger_server",
+    srcs = ["tagger_server.py"],
+    deps = [
+        ":graph_builder",
+        ":sentence_py_pb2",
+        ":structured_graph_builder",
+        ":task_spec_py_pb2",
+    ],
+)
+
+py_binary(
+    name = "parser_server",
+    srcs = ["parser_server.py"],
+    deps = [
+        ":graph_builder",
+        ":sentence_py_pb2",
+        ":structured_graph_builder",
+        ":task_spec_py_pb2",
+    ],
+)
+
+

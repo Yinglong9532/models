@@ -1,0 +1,101 @@
+2017-04-05 04:29:05.981261: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:29:05.981307: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:29:05.981315: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:29:05.981320: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:29:05.981324: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:29:05.989152: I syntaxnet/term_frequency_map.cc:101] Loaded 38 terms from /home/ubuntu/models/syntaxnet/models/Chinese/label-map.
+2017-04-05 04:29:05.989323: I syntaxnet/embedding_feature_extractor.cc:35] Features: input.char input(1).char input(2).char input(3).char input(-1).char input(-2).char input(-3).char stack.char stack.offset(1).char stack.offset(-1).char stack(1).char stack(1).offset(1).char stack(1).offset(-1).char stack(2).char; last-word(1,min-freq=2) last-word(2,min-freq=2) last-word(3,min-freq=2)
+2017-04-05 04:29:05.989337: I syntaxnet/embedding_feature_extractor.cc:36] Embedding names: chars;words
+2017-04-05 04:29:05.989342: I syntaxnet/embedding_feature_extractor.cc:37] Embedding dims: 32;32
+2017-04-05 04:29:06.038159: I syntaxnet/term_frequency_map.cc:101] Loaded 3570 terms from /home/ubuntu/models/syntaxnet/models/Chinese/char-map.
+2017-04-05 04:29:06.279862: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:29:06.522555: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:29:06.766348: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:29:17.276247: I syntaxnet/term_frequency_map.cc:101] Loaded 38 terms from /home/ubuntu/models/syntaxnet/models/Chinese/label-map.
+2017-04-05 04:29:17.276286: I syntaxnet/embedding_feature_extractor.cc:35] Features: input.char input(1).char input(2).char input(3).char input(-1).char input(-2).char input(-3).char stack.char stack.offset(1).char stack.offset(-1).char stack(1).char stack(1).offset(1).char stack(1).offset(-1).char stack(2).char; last-word(1,min-freq=2) last-word(2,min-freq=2) last-word(3,min-freq=2)
+2017-04-05 04:29:17.276294: I syntaxnet/embedding_feature_extractor.cc:36] Embedding names: chars;words
+2017-04-05 04:29:17.276299: I syntaxnet/embedding_feature_extractor.cc:37] Embedding dims: 32;32
+2017-04-05 04:29:17.325512: I syntaxnet/term_frequency_map.cc:101] Loaded 3570 terms from /home/ubuntu/models/syntaxnet/models/Chinese/char-map.
+2017-04-05 04:29:17.569554: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:29:17.814239: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:29:18.056056: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 290, in _handle_request_noblock
+    self.process_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 318, in process_request
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 328, in handle_one_request
+    method()
+  File "/home/ubuntu/models/syntaxnet/bazel-bin/syntaxnet/tokenizer_server.runfiles/__main__/syntaxnet/tokenizer_server.py", line 259, in do_POST
+    target_text = s.parser.Parse(target_text)
+  File "/home/ubuntu/models/syntaxnet/bazel-bin/syntaxnet/tokenizer_server.runfiles/__main__/syntaxnet/tokenizer_server.py", line 233, in Parse
+    print unicode(doc)
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 33-47: ordinal not in range(128)
+2017-04-05 04:29:18.359727: I syntaxnet/embedding_feature_extractor.cc:35] Features: input.char input(1).char input(2).char input(3).char input(-1).char input(-2).char input(-3).char stack.char stack.offset(1).char stack.offset(-1).char stack(1).char stack(1).offset(1).char stack(1).offset(-1).char stack(2).char; last-word(1,min-freq=2) last-word(2,min-freq=2) last-word(3,min-freq=2)
+2017-04-05 04:29:18.359776: I syntaxnet/embedding_feature_extractor.cc:36] Embedding names: chars;words
+2017-04-05 04:29:18.359783: I syntaxnet/embedding_feature_extractor.cc:37] Embedding dims: 32;32
+2017-04-05 04:29:18.592528: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:29:18.836774: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:29:19.069867: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 290, in _handle_request_noblock
+    self.process_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 318, in process_request
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 328, in handle_one_request
+    method()
+  File "/home/ubuntu/models/syntaxnet/bazel-bin/syntaxnet/tokenizer_server.runfiles/__main__/syntaxnet/tokenizer_server.py", line 259, in do_POST
+    target_text = s.parser.Parse(target_text)
+  File "/home/ubuntu/models/syntaxnet/bazel-bin/syntaxnet/tokenizer_server.runfiles/__main__/syntaxnet/tokenizer_server.py", line 233, in Parse
+    print unicode(doc)
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 33-47: ordinal not in range(128)
+2017-04-05 04:31:27.901291: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:31:27.901322: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:31:27.901328: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:31:27.901332: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:31:27.901346: W external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+2017-04-05 04:31:27.908654: I syntaxnet/term_frequency_map.cc:101] Loaded 38 terms from /home/ubuntu/models/syntaxnet/models/Chinese/label-map.
+2017-04-05 04:31:27.908845: I syntaxnet/embedding_feature_extractor.cc:35] Features: input.char input(1).char input(2).char input(3).char input(-1).char input(-2).char input(-3).char stack.char stack.offset(1).char stack.offset(-1).char stack(1).char stack(1).offset(1).char stack(1).offset(-1).char stack(2).char; last-word(1,min-freq=2) last-word(2,min-freq=2) last-word(3,min-freq=2)
+2017-04-05 04:31:27.908859: I syntaxnet/embedding_feature_extractor.cc:36] Embedding names: chars;words
+2017-04-05 04:31:27.908864: I syntaxnet/embedding_feature_extractor.cc:37] Embedding dims: 32;32
+2017-04-05 04:31:27.957250: I syntaxnet/term_frequency_map.cc:101] Loaded 3570 terms from /home/ubuntu/models/syntaxnet/models/Chinese/char-map.
+2017-04-05 04:31:28.198321: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:31:28.437276: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:31:28.679345: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:31:45.536038: I syntaxnet/term_frequency_map.cc:101] Loaded 38 terms from /home/ubuntu/models/syntaxnet/models/Chinese/label-map.
+2017-04-05 04:31:45.536087: I syntaxnet/embedding_feature_extractor.cc:35] Features: input.char input(1).char input(2).char input(3).char input(-1).char input(-2).char input(-3).char stack.char stack.offset(1).char stack.offset(-1).char stack(1).char stack(1).offset(1).char stack(1).offset(-1).char stack(2).char; last-word(1,min-freq=2) last-word(2,min-freq=2) last-word(3,min-freq=2)
+2017-04-05 04:31:45.536097: I syntaxnet/embedding_feature_extractor.cc:36] Embedding names: chars;words
+2017-04-05 04:31:45.536103: I syntaxnet/embedding_feature_extractor.cc:37] Embedding dims: 32;32
+2017-04-05 04:31:45.584887: I syntaxnet/term_frequency_map.cc:101] Loaded 3570 terms from /home/ubuntu/models/syntaxnet/models/Chinese/char-map.
+2017-04-05 04:31:45.828265: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:31:46.070338: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+2017-04-05 04:31:46.308975: I syntaxnet/term_frequency_map.cc:101] Loaded 7096 terms from /home/ubuntu/models/syntaxnet/models/Chinese/last-word-map.
+127.0.0.1 - - [05/Apr/2017 04:31:46] "POST /cgi-bin/query HTTP/1.1" 200 -
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 290, in _handle_request_noblock
+    self.process_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 318, in process_request
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 328, in handle_one_request
+    method()
+  File "/home/ubuntu/models/syntaxnet/bazel-bin/syntaxnet/tokenizer_server.runfiles/__main__/syntaxnet/tokenizer_server.py", line 263, in do_POST
+    print target_text
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 2-3: ordinal not in range(128)
