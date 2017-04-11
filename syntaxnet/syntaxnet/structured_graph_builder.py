@@ -83,7 +83,7 @@ class StructuredGraphBuilder(graph_builder.GreedyParser):
                      until_all_final=False,
                      always_start_new_sentences=False):
     """Adds an op capable of reading sentences and parsing them with a beam."""
-    documents = ' ' 
+    documents = [' '] 
     if input_content is not None:
       documents = input_content
     features, state, epochs = gen_parser_ops.beam_parse_reader(

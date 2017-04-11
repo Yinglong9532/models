@@ -57,7 +57,7 @@ BATCH_SIZE = 1024
 BEAM_SIZE = 8
 MAX_STEPS = 1000
 
-TOKENIZER_TASK_CONTEXT = '/home/chunfengh/models/syntaxnet/syntaxnet/models/parsey_universal/context-tokenize-zh.pbtxt'
+TOKENIZER_TASK_CONTEXT = '/home/chunfengh/models/syntaxnet/syntaxnet/models/parsey_universal/context-tokenize-zh-tensor.pbtxt'
 TOKENIZER_INPUT = 'stdin-untoken'
 TOKENIZER_ARG_PREFIX = 'brain_tokenizer_zh'
 TOKENIZER_HIDDEN_LAYER = '256,256'
@@ -88,7 +88,7 @@ def RewriteContext(task_context, in_corpus_name):
   tf_in = tempfile.NamedTemporaryFile(delete=False)
   for resource in context.input:
     for part in resource.part:
-      if part.file_pattern != '-':
+      if part.file_pattern not in ['-', 'tensor']:
         part.file_pattern = os.path.join(MODEL_DIR, part.file_pattern)
     if resource.name == in_corpus_name:
       for part in resource.part:
@@ -106,7 +106,10 @@ def UnderscoreIfEmpty(part):
 
 
 def GetMorphAttributes(token):
-  morph = token.Extensions('morphology')
+  extension = (sentence_pb2.TokenMorphology.morphology)
+  if not token.HasExtension(extension):
+    return unicode('_')
+  morph = token.Extensions[extension]
   if not morph:
     return unicode('_')
   if len(morph.attribute) == 0:
@@ -114,7 +117,7 @@ def GetMorphAttributes(token):
   attrs = []
   for attribute in morph.attribute:
     value = attribute.name
-    if attribute.value == 'on':
+    if attribute.value != 'on':
       value += unicode('=')
       value += attribute.value
     attrs.append(value)
@@ -200,20 +203,21 @@ class ParserEval:
 
 
   def Parse(self, sentence):
-    with open(self.in_name, "w") as f:
-      f.write(sentence)
- 
-    self.parser.AddEvaluation(self.task_context,
+    document = tf.placeholder(tf.string) 
+    self.parser.Predict(document,
+                              self.task_context,
                               BATCH_SIZE,
                               corpus_name=self.in_corpus_name,
                               evaluation_max_steps=MAX_STEPS)
-    # tf_documents = self.sess.run([self.parser.evaluation['documents'],])
+    print type(sentence)
+    #sentence = tf.compat.as_text(sentence, encoding='utf-8')
+    print type(sentence)
     _, _, tf_documents = self.sess.run([
           self.parser.evaluation['epochs'],
           self.parser.evaluation['eval_metrics'],
           self.parser.evaluation['documents'],
-      ])
-    assert len(tf_documents) == 1
+      ], feed_dict={document: [sentence]})
+    #assert len(tf_documents) == 1
     print type(tf_documents[len(tf_documents)-1])
     doc = sentence_pb2.Sentence()
     doc.ParseFromString(tf_documents[len(tf_documents)-1])
@@ -230,36 +234,9 @@ def main(unused_argv):
                            TOKENIZER_MODEL_PATH,
                            TOKENIZER_INPUT,
                            TOKENIZER_OUTPUT)
-  with tf.Session() as morpher_sess:
-    morpher = ParserEval(morpher_sess,
-                         TASK_CONTEXT,
-                         MORPHER_ARG_PREFIX,
-                         MORPHER_HIDDEN_LAYER,
-                         MORPHER_MODEL_PATH,
-                         TASK_INPUT,
-                         TASK_OUTPUT)
-  with tf.Session() as tagger_sess:
-    tagger = ParserEval(tagger_sess,
-                        TASK_CONTEXT,
-                        TAGGER_ARG_PREFIX,
-                        TAGGER_HIDDEN_LAYER,
-                        TAGGER_MODEL_PATH,
-                        TASK_INPUT,
-                        TASK_OUTPUT)
-  with tf.Session() as parser_sess:
-    parser = ParserEval(parser_sess,
-                        TASK_CONTEXT,
-                        PARSER_ARG_PREFIX,
-                        PARSER_HIDDEN_LAYER,
-                        PARSER_MODEL_PATH,
-                        TASK_INPUT,
-                        TASK_OUTPUT)
-
-  result = tokenizer.Parse("俄罗斯最新一艘亚森级核动力潜艇喀山号31日在北德文斯克举行下水礼.")
-  result = morpher.Parse(result)
-  result = tagger.Parse(result)
-  result = parser.Parse(result)
-  print result
+    result = tokenizer.Parse("This is my home")
+    result = tokenizer.Parse("俄罗斯最新一艘亚森级核动力潜艇喀山号31日在北德文斯克举行下水礼.")
+    print result
 
 
 if __name__ == '__main__':
