@@ -76,13 +76,18 @@ class StructuredGraphBuilder(graph_builder.GreedyParser):
     super(StructuredGraphBuilder, self).__init__(*args, **kwargs)
 
   def _AddBeamReader(self,
+                     input_content,
                      task_context,
                      batch_size,
                      corpus_name,
                      until_all_final=False,
                      always_start_new_sentences=False):
     """Adds an op capable of reading sentences and parsing them with a beam."""
+    documents = ' ' 
+    if input_content is not None:
+      documents = input_content
     features, state, epochs = gen_parser_ops.beam_parse_reader(
+        documents,
         task_context=task_context,
         feature_size=self._feature_size,
         beam_size=self._beam_size,
@@ -145,7 +150,7 @@ class StructuredGraphBuilder(graph_builder.GreedyParser):
       n['accumulated_alive_steps'] = self._AddVariable(
           [batch_size], tf.int32, 'accumulated_alive_steps',
           tf.zeros_initializer())
-      n.update(self._AddBeamReader(task_context, batch_size, corpus_name))
+      n.update(self._AddBeamReader(None, task_context, batch_size, corpus_name))
       # This adds a required 'step' node too:
       learning_rate = tf.constant(learning_rate, dtype=tf.float32)
       n['learning_rate'] = self._AddLearningRate(learning_rate, decay_steps)
@@ -228,7 +233,30 @@ class StructuredGraphBuilder(graph_builder.GreedyParser):
                     corpus_name=None):
     with tf.name_scope('evaluation'):
       n = self.evaluation
-      n.update(self._AddBeamReader(task_context,
+      n.update(self._AddBeamReader(None,
+                                   task_context,
+                                   batch_size,
+                                   corpus_name,
+                                   until_all_final=True,
+                                   always_start_new_sentences=True))
+      self._BuildNetwork(
+          list(n['features']),
+          return_average=self._use_averaging)
+      n.update(self._BuildSequence(batch_size, evaluation_max_steps, n[
+          'features'], n['state'], use_average=self._use_averaging))
+      n['eval_metrics'], n['documents'] = (
+          gen_parser_ops.beam_eval_output(n['state']))
+    return n
+
+  def Predict(self, input,
+                    task_context,
+                    batch_size,
+                    evaluation_max_steps=300,
+                    corpus_name=None):
+    with tf.name_scope('evaluation'):
+      n = self.evaluation
+      n.update(self._AddBeamReader(input,
+                                   task_context,
                                    batch_size,
                                    corpus_name,
                                    until_all_final=True,

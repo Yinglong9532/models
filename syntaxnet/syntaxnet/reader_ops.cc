@@ -118,6 +118,14 @@ class ParsingReader : public OpKernel {
 
   void Compute(OpKernelContext *context) override {
     mutex_lock lock(mu_);
+    if (sentence_batch_->NeedInitializeDelayedBuffer()) {
+      auto documents = context->input(0).vec<string>();
+      vector<string> contents;
+      for (int i = 0; i < documents.size(); ++i) {
+        contents.push_back(documents(i));
+      }
+      sentence_batch_->InitializedDelayedBuffer(contents);
+    }
 
     // Advances states to the next positions.
     PerformActions(context);

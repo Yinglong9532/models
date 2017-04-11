@@ -262,6 +262,7 @@ class GreedyParser(object):
     return self._AddVariable([], tf.int32, 'step', OnesInitializer)
 
   def _AddVariable(self, shape, dtype, name, initializer=None):
+    print name
     if name in self.variables:
       return self.variables[name]
     self.variables[name] = tf.get_variable(name, shape, dtype, initializer)

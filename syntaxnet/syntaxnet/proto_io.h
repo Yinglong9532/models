@@ -141,6 +141,50 @@ class StdIn : public tensorflow::RandomAccessFile {
   TF_DISALLOW_COPY_AND_ASSIGN(StdIn);
 };
 
+
+// A file implementation to read from Delayed initialized buffer, this is
+// a special case used to read input from tensor.
+class DelayedBufferIn : public tensorflow::RandomAccessFile {
+ public:
+  DelayedBufferIn() {}
+  ~DelayedBufferIn() override {}
+
+  void InitBuffer(const vector<string> &contents) {
+    for (const auto &content : contents) {
+      buffer_.append(content);
+      buffer_.append("\n");
+    }
+  }
+
+  // Reads up to n bytes from standard input.  Returns `OUT_OF_RANGE` if fewer
+  // than n bytes were stored in `*result` because of EOF.
+  tensorflow::Status Read(uint64 offset, size_t n,
+                          tensorflow::StringPiece *result,
+                          char *scratch) const override {
+    CopyFromBuffer(std::min(buffer_.size(), n), result, scratch);
+    if (buffer_.empty()) {
+      return tensorflow::errors::OutOfRange("End of file reached");
+    } else {
+      return tensorflow::Status::OK();
+    }
+  }
+
+ private:
+  void CopyFromBuffer(size_t n, tensorflow::StringPiece *result,
+                      char *scratch) const {
+    memcpy(scratch, buffer_.data(), buffer_.size());
+    buffer_ = buffer_.substr(n);
+    *result = tensorflow::StringPiece(scratch, n);
+    expected_offset_ += n;
+  }
+
+  mutable int64 expected_offset_ = 0;
+  mutable string buffer_;
+
+  TF_DISALLOW_COPY_AND_ASSIGN(DelayedBufferIn);
+};
+
+
 // Reads sentence protos from a text file.
 class TextReader {
  public:
@@ -158,6 +202,12 @@ class TextReader {
   }
 
   Sentence *Read() {
+    // If input type is DelayedBufferIn, then InitializedDelayedBuffer must
+    // be called to make sure buffer is ready for use.
+    if (delayed_buffer_in_) {
+      CHECK(delayed_buffer_initialized_);
+    }
+
     // Skips emtpy sentences, e.g., blank lines at the beginning of a file or
     // commented out blocks.
     std::vector<Sentence *> sentences;
@@ -184,6 +234,13 @@ class TextReader {
       stream_.reset(new tensorflow::io::RandomAccessInputStream(file_.get()));
       buffer_.reset(new tensorflow::io::BufferedInputStream(file_.get(),
                                                             kInputBufferSize));
+    } else if (filename_ == "tensor") {
+      static const int kInputBufferSize = 8 * 1024; /* bytes */
+      delayed_buffer_in_ = new DelayedBufferIn();
+      file_.reset(delayed_buffer_in_);
+      stream_.reset(new tensorflow::io::RandomAccessInputStream(file_.get()));
+      buffer_.reset(new tensorflow::io::BufferedInputStream(
+          delayed_buffer_in_, kInputBufferSize));
     } else {
       static const int kInputBufferSize = 1 * 1024 * 1024; /* bytes */
       TF_CHECK_OK(
@@ -192,6 +249,21 @@ class TextReader {
       buffer_.reset(new tensorflow::io::BufferedInputStream(file_.get(),
                                                             kInputBufferSize));
     }
+  }
+
+
+  bool NeedInitializeDelayedBuffer() {
+    mutex_lock lock(mu_);
+    return delayed_buffer_in_ != nullptr && !delayed_buffer_initialized_;
+  }
+
+  void InitializedDelayedBuffer(const vector<string> &contents) {
+    mutex_lock lock(mu_);
+    if (delayed_buffer_initialized_) {
+      return;
+    }
+    delayed_buffer_in_->InitBuffer(contents);
+    delayed_buffer_initialized_ = true;
   }
 
  private:
@@ -203,6 +275,11 @@ class TextReader {
       stream_;  // Must outlive buffer_
   std::unique_ptr<tensorflow::io::BufferedInputStream> buffer_;
   std::unique_ptr<DocumentFormat> format_;
+
+  // Acutal object instance owned by file_.
+  DelayedBufferIn *delayed_buffer_in_ = nullptr;
+  bool delayed_buffer_initialized_ = false;
+  mutex mu_;
 };
 
 // Writes sentence protos to a text conll file.

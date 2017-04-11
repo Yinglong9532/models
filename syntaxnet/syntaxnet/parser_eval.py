@@ -107,12 +107,16 @@ def Eval(sess):
         max_steps=FLAGS.max_steps)
   parser.AddEvaluation(task_context,
                        FLAGS.batch_size,
-                       corpus_name=FLAGS.input,
                        evaluation_max_steps=FLAGS.max_steps)
 
   parser.AddSaver(FLAGS.slim_model)
   sess.run(parser.inits.values())
   parser.saver.restore(sess, FLAGS.model_path)
+
+  parser.AddEvaluation(task_context,
+                       FLAGS.batch_size,
+                       corpus_name=FLAGS.input,
+                       evaluation_max_steps=FLAGS.max_steps)
 
   sink_documents = tf.placeholder(tf.string)
   sink = gen_parser_ops.document_sink(sink_documents,
@@ -133,6 +137,10 @@ def Eval(sess):
     if len(tf_documents):
       logging.info('Processed %d documents', len(tf_documents))
       num_documents += len(tf_documents)
+      print type(tf_documents[len(tf_documents)-1])
+      doc = sentence_pb2.Sentence()
+      doc.ParseFromString(tf_documents[len(tf_documents)-1])
+      print unicode(doc)
       sess.run(sink, feed_dict={sink_documents: tf_documents})
 
     num_tokens += tf_eval_metrics[0]

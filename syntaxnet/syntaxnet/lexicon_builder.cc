@@ -112,6 +112,14 @@ class LexiconBuilder : public OpKernel {
     int64 num_documents = 0;
     Sentence *document;
     TextReader corpus(*task_context_.GetInput(corpus_name_), &task_context_);
+    if (corpus.NeedInitializeDelayedBuffer()) {
+      auto documents = context->input(0).vec<string>();
+      vector<string> contents;
+      for (int i = 0; i < documents.size(); ++i) {
+        contents.push_back(documents(i));
+      }
+      corpus.InitializedDelayedBuffer(contents);
+    }
     while ((document = corpus.Read()) != nullptr) {
       // Gather token information.
       for (int t = 0; t < document->token_size(); ++t) {

@@ -72,6 +72,7 @@ arg_prefix: prefix for context parameters.
 )doc");
 
 REGISTER_OP("BeamParseReader")
+    .Input("documents: string")
     .Output("features: feature_size * string")
     .Output("beam_state: int64")
     .Output("num_epochs: int32")

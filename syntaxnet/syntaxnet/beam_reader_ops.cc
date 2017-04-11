@@ -513,6 +513,14 @@ class BatchState {
   int Epoch() const { return epoch_; }
 
   const string &ScoringType() const { return options_.scoring_type; }
+  
+  bool NeedInitializeDelayedBuffer() {
+    return sentence_batch_->NeedInitializeDelayedBuffer();
+  }
+
+  void InitializedDelayedBuffer(const vector<string> &contents) {
+    sentence_batch_->InitializedDelayedBuffer(contents);
+  }
 
  private:
   const BatchStateOptions options_;
@@ -601,11 +609,19 @@ class BeamParseReader : public OpKernel {
     std::vector<DataType> output_types(feature_size, DT_STRING);
     output_types.push_back(DT_INT64);
     output_types.push_back(DT_INT32);
-    OP_REQUIRES_OK(context, context->MatchSignature({}, output_types));
+    OP_REQUIRES_OK(context, context->MatchSignature({DT_STRING}, output_types));
   }
 
   void Compute(OpKernelContext *context) override {
     mutex_lock lock(mu_);
+    if (batch_state_->NeedInitializeDelayedBuffer()) {
+      auto documents = context->input(0).vec<string>();
+      vector<string> contents;
+      for (int i = 0; i < documents.size(); ++i) {
+        contents.push_back(documents(i));
+      }
+      batch_state_->InitializedDelayedBuffer(contents);
+    }
 
     // Write features.
     batch_state_->ResetBeams();

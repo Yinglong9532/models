@@ -55,6 +55,15 @@ class SentenceBatch {
 
   Sentence *sentence(int index) { return sentences_[index].get(); }
 
+
+  bool NeedInitializeDelayedBuffer() {
+    return reader_->NeedInitializeDelayedBuffer();
+  }
+
+  void InitializedDelayedBuffer(const vector<string> &contents) {
+    reader_->InitializedDelayedBuffer(contents);
+  }
+
  private:
   // Running tally of non-nullptr states in the batch.
   int size_;

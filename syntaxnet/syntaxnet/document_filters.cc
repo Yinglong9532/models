@@ -91,6 +91,14 @@ class DocumentSource : public OpKernel {
 
   void Compute(OpKernelContext *context) override {
     mutex_lock lock(mu_);
+    if (corpus_->NeedInitializeDelayedBuffer()) {
+      auto documents = context->input(0).vec<string>();
+      vector<string> contents;
+      for (int i = 0; i < documents.size(); ++i) {
+        contents.push_back(documents(i));
+      }
+      corpus_->InitializedDelayedBuffer(contents);
+    }
     Sentence *document;
     std::vector<Sentence *> document_batch;
     while ((document = corpus_->Read()) != nullptr) {
