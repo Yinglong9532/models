@@ -925,4 +925,13 @@ py_binary(
     ],
 )
 
-
+py_binary(
+    name = "exporter",
+    srcs = ["exporter.py"],
+    deps = [
+        ":graph_builder",
+        ":sentence_py_pb2",
+        ":structured_graph_builder",
+        ":task_spec_py_pb2",
+    ],
+)

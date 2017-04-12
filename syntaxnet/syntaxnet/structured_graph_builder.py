@@ -248,12 +248,13 @@ class StructuredGraphBuilder(graph_builder.GreedyParser):
           gen_parser_ops.beam_eval_output(n['state']))
     return n
 
-  def Predict(self, input,
-                    task_context,
-                    batch_size,
-                    evaluation_max_steps=300,
-                    corpus_name=None):
-    with tf.name_scope('evaluation'):
+  def Predict(self,
+              input,
+              task_context,
+              batch_size,
+              evaluation_max_steps=300,
+              corpus_name=None):
+    with tf.name_scope('predict'):
       n = self.evaluation
       n.update(self._AddBeamReader(input,
                                    task_context,
