@@ -935,3 +935,26 @@ py_binary(
         ":task_spec_py_pb2",
     ],
 )
+
+py_binary(
+    name = "brain_pos_server",
+    srcs = ["brain_pos_server.py"],
+    deps = [
+        ":graph_builder",
+        ":sentence_py_pb2",
+        ":structured_graph_builder",
+        ":task_spec_py_pb2",
+    ],
+)
+
+py_binary(
+    name = "brain_parser_server",
+    srcs = ["brain_parser_server.py"],
+    deps = [
+        ":graph_builder",
+        ":sentence_py_pb2",
+        ":structured_graph_builder",
+        ":task_spec_py_pb2",
+    ],
+)
+

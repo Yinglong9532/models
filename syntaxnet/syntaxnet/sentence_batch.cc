@@ -36,7 +36,6 @@ bool SentenceBatch::AdvanceSentence(int index) {
     --size_;
     return false;
   }
-
   // Preprocess the new sentence for the parser state.
   sentences_[index] = std::move(sentence);
   return true;
