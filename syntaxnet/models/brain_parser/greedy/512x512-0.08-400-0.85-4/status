@@ -1,0 +1,11 @@
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 5000 | Tuning score: 66.26% | Best tuning score: 66.26%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 10000 | Tuning score: 67.72% | Best tuning score: 67.72%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 15000 | Tuning score: 67.98% | Best tuning score: 67.98%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 20000 | Tuning score: 68.07% | Best tuning score: 68.07%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 25000 | Tuning score: 67.53% | Best tuning score: 68.07%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 30000 | Tuning score: 67.45% | Best tuning score: 68.07%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 35000 | Tuning score: 67.34% | Best tuning score: 68.07%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 40000 | Tuning score: 67.35% | Best tuning score: 68.07%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 45000 | Tuning score: 67.64% | Best tuning score: 68.07%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 50000 | Tuning score: 67.59% | Best tuning score: 68.07%
+Parameters: 512x512-0.08-400-0.85-4 | Steps: 55000 | Tuning score: 67.65% | Best tuning score: 68.07%
