@@ -34,21 +34,21 @@ input {
   name: 'training-corpus'
   record_format: 'conll-sentence'
   Part {
-    file_pattern: '/home/chunfengh/models/syntaxnet/models/UD_Chinese-master/zh-ud-train.conllu'
+    file_pattern: '/home/ubuntu/models/syntaxnet/models/train.conll'
   }
 }
 input {
   name: 'tuning-corpus'
   record_format: 'conll-sentence'
   Part {
-    file_pattern: '/home/chunfengh/models/syntaxnet/models/UD_Chinese-master/zh-ud-dev.conllu'
+    file_pattern: '/home/ubuntu/models/syntaxnet/models/dev.conll'
   }
 }
 input {
   name: 'dev-corpus'
   record_format: 'conll-sentence'
   Part {
-    file_pattern: '/home/chunfengh/models/syntaxnet/models/UD_Chinese-master/zh-ud-dev.conllu'
+    file_pattern: '/home/ubuntu/models/syntaxnet/models/dev.conll'
   }
 }
 input {

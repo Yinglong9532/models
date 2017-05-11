@@ -243,8 +243,10 @@ class FeatureSize : public OpKernel {
     // See comment at the bottom of Compute() below.
     const string label_map_path =
         TaskContext::InputFile(*task_context_.GetInput("label-map"));
+    std::cout << "label_map_path:" << label_map_path << std::endl;
     label_map_ = SharedStoreUtils::GetWithDefaultName<TermFrequencyMap>(
         label_map_path, 0, 0);
+    std::cout << "loaded label_map size: " << label_map_->Size() << std::endl;
   }
 
   ~FeatureSize() override { SharedStore::Release(label_map_); }

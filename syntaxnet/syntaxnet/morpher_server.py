@@ -283,7 +283,7 @@ def main(unused_argv):
                       MORPHER_ARG_PREFIX,
                       MORPHER_HIDDEN_LAYER,
                       MORPHER_MODEL_PATH,
-                      TASK_INPUT,
+                      'stdin', # TASK_INPUT,
                       TASK_OUTPUT)
   # with tf.Session() as tagger_sess:
   #   tagger = ParserEval(tagger_sess,

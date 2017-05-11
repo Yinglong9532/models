@@ -18,6 +18,7 @@ limitations under the License.
 #include <stddef.h>
 #include <algorithm>
 #include <limits>
+#include <iostream>
 
 #include "tensorflow/core/lib/core/status.h"
 #include "tensorflow/core/lib/io/buffered_inputstream.h"
@@ -70,7 +71,7 @@ void TermFrequencyMap::Load(const string &filename, int min_frequency,
   int32 total = -1;
   CHECK(utils::ParseInt32(line.c_str(), &total));
   CHECK_GE(total, 0);
-
+  std::cout << "num line: " << line << std::endl;
   // Read the mapping.
   int64 last_frequency = -1;
   for (int i = 0; i < total && i < max_num_terms; ++i) {

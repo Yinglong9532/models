@@ -56,16 +56,16 @@ flags.DEFINE_integer('max_steps', 1000, 'Max number of steps to take.')
 flags.DEFINE_bool('slim_model', False,
                   'Whether to expect only averaged variables.')
                   
-MODEL_DIR = '/home/chunfengh/models/syntaxnet/'
+MODEL_DIR = '/home/ubuntu/models/syntaxnet/'
 USE_SLIM_MODEL = True
 
-TASK_CONTEXT = '/home/chunfengh/models/syntaxnet/models/brain_parser/structured/512x512-0.02-100-0.9-0/context'
+TASK_CONTEXT = '/home/ubuntu/models/syntaxnet/models/brain_parser/structured/512x512-0.005-10000-0.9-0/context'
 TASK_INPUT = 'stdin-conll'
 TASK_OUTPUT = 'stdout-conll'
 
 HIDDEN_LAYER = '512,512'
 ARG_PREFIX = 'brain_parser'
-MODEL_PATH = 'models/brain_parser/structured/512x512-0.02-100-0.9-0/model'
+MODEL_PATH = 'models/brain_parser/structured/512x512-0.005-10000-0.9-0/model'
 BATCH_SIZE = 8
 MAX_STEPS = 1000
 

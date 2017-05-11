@@ -6,6 +6,7 @@ import BaseHTTPServer
 import cgi
 import httplib
 import urllib
+import jieba
 
 HOST_NAME = '' # !!!REMEMBER TO CHANGE THIS!!!
 PORT_NUMBER = 8080 # Maybe set this to 9000.
@@ -72,13 +73,15 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 target_text = item.value
         input_text = target_text
         #print target_text
-        target_text = FetchParserResult('localhost:1080', target_text)
+        #target_text = FetchParserResult('localhost:1080', target_text)
+        seg_list = jieba.cut(target_text)
+        target_text = unicode(' ').join(seg_list).encode('utf-8')
         #print target_text
-        target_text = FetchParserResult('localhost:2080', target_text)
+        target_text = FetchParserResult('localhost:5080', target_text)
         #print target_text
-        target_text = FetchParserResult('localhost:3080', target_text)
+        target_text = FetchParserResult('localhost:6080', target_text)
         #print target_text
-        target_text = FetchParserResult('localhost:4080', target_text)
+        #target_text = FetchParserResult('localhost:4080', target_text)
         #print target_text
 
         s.send_response(200)
@@ -90,6 +93,7 @@ if __name__ == '__main__':
     server_class = BaseHTTPServer.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
     print time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER)
+    jieba.load_userdict("/home/ubuntu/dict4.txt")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

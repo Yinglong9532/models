@@ -404,6 +404,7 @@ class GreedyParser(object):
 
   def _AddCostFunction(self, batch_size, gold_actions, logits):
     """Cross entropy plus L2 loss on weights and biases of the hidden layers."""
+    print "num actions %d" % self._num_actions
     dense_golden = BatchedSparseToDense(gold_actions, self._num_actions)
     cross_entropy = tf.div(
         tf.reduce_sum(

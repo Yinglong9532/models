@@ -294,6 +294,10 @@ def main(unused_argv):
           break
 
   logging.info('Training...')
+  print num_actions
+  print feature_sizes
+  print domain_sizes
+  print embedding_dims
   with tf.Session(FLAGS.tf_master) as sess:
     Train(sess, num_actions, feature_sizes, domain_sizes, embedding_dims)
 

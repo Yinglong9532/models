@@ -1,0 +1,11 @@
+Parameters: 128-0.008-20000-0.9-0 | Steps: 5000 | Tuning score: 58.78% | Best tuning score: 58.78%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 10000 | Tuning score: 67.15% | Best tuning score: 67.15%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 15000 | Tuning score: 77.41% | Best tuning score: 77.41%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 20000 | Tuning score: 76.52% | Best tuning score: 77.41%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 25000 | Tuning score: 76.43% | Best tuning score: 77.41%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 30000 | Tuning score: 78.25% | Best tuning score: 78.25%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 35000 | Tuning score: 77.63% | Best tuning score: 78.25%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 40000 | Tuning score: 77.08% | Best tuning score: 78.25%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 45000 | Tuning score: 78.42% | Best tuning score: 78.42%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 50000 | Tuning score: 77.99% | Best tuning score: 78.42%
+Parameters: 128-0.008-20000-0.9-0 | Steps: 55000 | Tuning score: 77.48% | Best tuning score: 78.42%
